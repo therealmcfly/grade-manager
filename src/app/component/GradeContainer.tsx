@@ -159,34 +159,36 @@ export default function GradeContainer(): JSX.Element {
 	
 	return (
 		<div className="mx-10">
+			<h1 className="text-2xl underline my-5">{`${customCourseStructure.courseName} Grade Manager`}</h1>
 			{
 				customCourseStructure.subjects.map((subject, i) => {
 					return (
-						<div key={i}>
-							<p className="text-xl underline mb-2 mt-5">{subject.name + " - [" + subject.percentage + "%]"}</p>
-							{
-								subject.components ?
-									subject.components.map(
-										(component, i) => {
-											if(component.components) {
-												return (
-													<div key={i}>
-														<p className="text-l mb-2">{component.name + " - [" + ((Number(component.percentage)/100) * Number(subject.percentage)) + "%]"}</p>
-														{component.components.map((subComponent) => {
-															return <GradeItem key={i} component={subComponent} parentPercentage={((Number(component.percentage)/100) * Number(subject.percentage))} />
-														})}
-													</div>
-												);
-											}
-											else {
-												return <GradeItem key={i} component={component} parentPercentage={subject.percentage} />
-											}
-										}
-									)									
-								: <GradeItem component={subject}/>
+						<GradeItem key={i} component={subject} parentPercentage={100}/>
+						// <div key={i}>
+						// 	<p className="text-xl underline mb-2 mt-5">{subject.name + " - [" + subject.percentage + "%]"}</p>
+						// 	{
+						// 		subject.components ?
+						// 			subject.components.map(
+						// 				(component, i) => {
+						// 					// if(component.components) {
+						// 					// 	return (
+						// 					// 		<div key={i}>
+						// 					// 			<p className="text-l mb-2">{component.name + " - [" + ((Number(component.percentage)/100) * Number(subject.percentage)) + "%]"}</p>
+						// 					// 			{component.components.map((subComponent) => {
+						// 					// 				return <GradeItem key={i} component={subComponent} parentPercentage={((Number(component.percentage)/100) * Number(subject.percentage))} />
+						// 					// 			})}
+						// 					// 		</div>
+						// 					// 	);
+						// 					// }
+						// 					// else {
+						// 					// }
+						// 					return <GradeItem key={i} component={component} parentPercentage={subject.percentage} />
+						// 				}
+						// 			)									
+						// 		: <GradeItem component={subject}/>
 								
-							}
-						</div>
+						// 	}
+						// </div>
 					)
 					
 				})

@@ -6,7 +6,6 @@ export default function Home() {
 
   return (
 		<>
-			<h1 className="text-2xl underline">Grade Manager</h1>
 			<GradeContainer/>
 			{/* <GradeItem name="field1" setGrade={setGrade} grade={grade}/>
 			<GradeItem name="field2" setGrade={setGrade} grade={grade}/>
