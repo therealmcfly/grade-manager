@@ -167,19 +167,19 @@ export default function GradeContainer(): JSX.Element {
 						{
 							subject.components ?
 								subject.components.map(
-									(component) => {
+									(component, i) => {
 										if(component.components) {
 											return (
 												<>
 													<p className="text-l mb-2">{component.name + " - [" + ((Number(component.percentage)/100) * Number(subject.percentage)) + "%]"}</p>
 													{component.components.map((subComponent) => {
-														return <GradeItem component={subComponent} parentPercentage={((Number(component.percentage)/100) * Number(subject.percentage))} />
+														return <GradeItem key={i} component={subComponent} parentPercentage={((Number(component.percentage)/100) * Number(subject.percentage))} />
 													})}
 												</>
 											);
 										}
 										else {
-											return <GradeItem component={component} parentPercentage={subject.percentage} />
+											return <GradeItem key={i} component={component} parentPercentage={subject.percentage} />
 										}
 									}
 								)									
