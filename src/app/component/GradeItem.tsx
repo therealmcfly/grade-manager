@@ -21,7 +21,7 @@ export default function GradeItem({component, parentPercentage, grade, setGrade}
 	
 	}
 	return (
-		<div key={} className="mb-2 ml-10">
+		<div className="mb-2 ml-10">
 			{component.name && <span>{component.name + " : "}</span>}
 			<input 
 				className="w-10" 
