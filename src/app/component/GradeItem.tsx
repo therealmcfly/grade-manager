@@ -5,6 +5,7 @@ interface GradeItemProps {
 	parentPercentage: number;
 	courseGrades: IGrade[];
 	setCourseGrades: React.Dispatch<React.SetStateAction<IGrade[]>>;
+	scoreToPass?:number;
 }
 export default function GradeItem({component, parentPercentage, courseGrades, setCourseGrades}:GradeItemProps): JSX.Element {
 	const [ inputValue, setInputValue ] = useState<string>("");
@@ -12,6 +13,8 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 	const [ inputEnabled, setInputEnabled ] = useState<boolean>(false);
 
 	const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+		
+		if(Number(e.target.value) > 100) return;
 		setInputValue(e.target.value);
 	}
 	const calculatePercentage = (percentage:number, parentPercentage:number = 100) => {
@@ -117,11 +120,11 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 						</>
 						:
 						<>
-							<span>## </span>
 							<button 
 								type="button" onClick={handleSetClick}
 								className="border-white border-2 px-1"
 							>SET</button>
+							<div className="text-blue-300">{`${"##"}% to pass the course`}</div>
 						</>
 						}
 						

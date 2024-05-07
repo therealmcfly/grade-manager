@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GradeItem from "./GradeItem";
 
 class CourseGrades {
@@ -218,6 +218,11 @@ interface GradeContainerProps {
 }
 export default function GradeContainer(): JSX.Element {
 	const [courseGrades, setCourseGrades] = useState<IGrade[]>(myInitialGrades);
+	const [ gradeToPass, setGradeToPass ] = useState<number>();
+
+	useEffect(() => {
+		
+	}, [gradeToPass]);
 	
 	return (
 		<div className="mx-10">
