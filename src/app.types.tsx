@@ -3,37 +3,66 @@ interface ICourseStructure {
 	passingGrade: number;
 	subjects: IComponent[];
 }
-class Course {
-	courseSturcture: ICourseStructure;
+class CourseGrades {
 	courseName: string;
-	grade;
-	constructor(courseStructure: ICourseStructure, ) {
-		this.courseSturcture = courseStructure;
+	passingGrade: number;
+	grades:IGrade[];
+	constructor(courseStructure: ICourseStructure, grade?:IGrade[]) {
 		this.courseName = courseStructure.courseName;
-		this.grade = {
-		}
+		this.passingGrade = courseStructure.passingGrade;
+		grade ? this.grades = grade : this.grades = [];
+		courseStructure.subjects.map((subject) => {
+			if (subject.components) {
+				subject.components.map((component) => {
+					if(component.components) {
+						component.components.map((subComponent) => {
+							this.grades.push({
+								name: subComponent.name,
+								percentage: ((subComponent.percentage/100 * component.percentage)/100) * subject.percentage,
+								grade: null
+							})
+						})
+					}
+					else {
+						this.grades.push({
+							name: component.name,
+							percentage: (component.percentage/100) * subject.percentage,
+							grade: null
+						})
+					}
+				})
+			}
+			else {
+				this.grades.push({
+					name: subject.name,
+					percentage: subject.percentage,
+					grade: null
+				})
+			}
+		})
+
+		// if(grade)	{
+		// 	console.log("grade data submitted");
+		// 	grade.map((g) => {
+		// 		const thisGrade = this.grades.find((thisGrade) => thisGrade.name === g.name);
+		// 		if(thisGrade) {
+		// 			thisGrade.grade = g.grade;
+		// 		}
+		// 		else {
+		// 			this.grades.push(g);
+		// 		}
+		// 	})
+		// }
 	}
-	// public createGrade() {
-	// 	const subjects:any[] = [];
-	// 	if(this.courseSturcture.subjects.length !== 0) {
-	// 		this.courseSturcture.subjects.forEach((subject) => {
-	// 			if(subject.components) {
-
-	// 			}
-	// 			else {
-
-	// 			}
-
-	// 		});
-	// 	}
-	// }
+	public updateGrade(name:string, grade:number) {
+		this.grades.find((grade) => grade.name === name)!.grade = grade;
+	}
 }
 
-class Grade {
-	constructor(grade: number, weight: number) {
-		// this.grade = grade;
-		// this.weight = weight;
-	}
+interface IGrade {
+	name: string;
+	percentage?: number;
+	grade: number|null|undefined;
 }
 
 interface IComponent {
