@@ -6,6 +6,10 @@ export default function Home() {
 
   return (
 		<>
+			<div className="flex justify-center">
+				<a className="underline" href="https://www.linkedin.com/in/eugenehjlee/">{`Created by - therealmcfly`}</a>
+				
+			</div>
 			<GradeContainer/>
 			{/* <GradeItem name="field1" setGrade={setGrade} grade={grade}/>
 			<GradeItem name="field2" setGrade={setGrade} grade={grade}/>
