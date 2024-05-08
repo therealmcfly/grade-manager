@@ -268,7 +268,9 @@ export default function GradeContainer(): JSX.Element {
 	const [courseGrades, setCourseGrades] = useState<IGrade[]>([]);
 	const [ gradeToPass, setGradeToPass ] = useState<number|null>();
 
-	
+	const handleBtnClick = () => {
+		alert("For this feature, tell Eugene that you think he is handsome. ^_________^");
+	}
 
 	useEffect(() => {
 		setCourseGrades(createGrades(customCourseStructure)) ;
@@ -312,8 +314,16 @@ export default function GradeContainer(): JSX.Element {
 	}, [courseGrades]);
 	
 	return (
-		<div className="mx-10">
-			<h1 className="text-2xl underline my-5">{`${customCourseStructure.courseName} Grade Manager`}</h1>
+		<div className="mx-5 w-full">
+			<div className="flex justify-between items-center">
+				<span className="text-2xl underline my-5">
+					{`${customCourseStructure.courseName} Grade Manager`}
+				</span>
+				<div className="flex items-center">
+					<button className="border-white border-2 px-1 mr-5" type="button" onClick={handleBtnClick}>load course</button>
+					<button className="border-white border-2 px-1 mr-5" type="button" onClick={handleBtnClick}>load grade</button>
+				</div>
+			</div>
 			{
 				customCourseStructure.subjects.map((subject, i) => {
 					return (
