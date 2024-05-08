@@ -5,9 +5,9 @@ interface GradeItemProps {
 	parentPercentage: number;
 	courseGrades: IGrade[];
 	setCourseGrades: React.Dispatch<React.SetStateAction<IGrade[]>>;
-	scoreToPass?:number;
+	gradeToPass:number|null|undefined;
 }
-export default function GradeItem({component, parentPercentage, courseGrades, setCourseGrades}:GradeItemProps): JSX.Element {
+export default function GradeItem({component, parentPercentage, courseGrades, setCourseGrades, gradeToPass}:GradeItemProps): JSX.Element {
 	const [ inputValue, setInputValue ] = useState<string>("");
 	const [ grade, setGrade ] = useState<number|null|undefined>(null);
 	const [ inputEnabled, setInputEnabled ] = useState<boolean>(false);
@@ -59,6 +59,7 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 				updatedGrades.push(
 					{
 						name : component.name,
+						percentage: component.percentage,
 						grade : Number(inputValue)
 					}
 				);
@@ -76,7 +77,7 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 	useEffect(() => {
 		if(component.components) return;
 		setGrade(courseGrades.find((g)=> g.name === component.name)?.grade);
-	}, [grade, courseGrades]);
+	}, [courseGrades]);
 
 	return (
 		<div className="mx-10 my-2">
@@ -93,6 +94,7 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 									parentPercentage={calculatePercentage(component.percentage,parentPercentage)}
 									courseGrades={courseGrades}
 									setCourseGrades={setCourseGrades}
+									gradeToPass={gradeToPass}
 									/>
 							)
 						})
@@ -124,7 +126,7 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 								type="button" onClick={handleSetClick}
 								className="border-white border-2 px-1"
 							>SET</button>
-							<div className="text-blue-300">{`${"##"}% to pass the course`}</div>
+							<div className="text-blue-300">{`${gradeToPass?.toFixed(2)}% to pass the course`}</div>
 						</>
 						}
 						

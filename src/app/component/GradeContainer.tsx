@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import GradeItem from "./GradeItem";
+import { stringify } from "querystring";
 
 class CourseGrades {
 	courseName: string;
@@ -58,7 +59,7 @@ class CourseGrades {
 }
 
 const customCourseStructure:ICourseStructure = {
-	courseName: "EAP2",
+	courseName: "EAP 2",
 	passingGrade: 75,
 	subjects: [
 		{
@@ -206,23 +207,109 @@ const customCourseStructure:ICourseStructure = {
 	],
 }
 
-const myInitialGrades:IGrade[] = [
-	// {
-	// 	name: "Live Writing 1",
-	// 	grade: 90
-	// }
+const myInitialGrades = [
+	{
+		name: "Live Writing 1",
+		grade: 90
+	}
 ]
+
+const createGrades = (structure:ICourseStructure, prevGrades?:{name:string, grade:number}[]):IGrade[] => {
+	const grades:IGrade[] = [];
+	structure.subjects.map((subject) => {
+		if (subject.components) {
+			subject.components.map((component) => {
+				if(component.components) {
+					component.components.map((subComponent) => {
+						grades.push({
+							name: subComponent.name,
+							percentage: ((subComponent.percentage/100 * component.percentage)/100) * subject.percentage,
+							grade: null
+						})
+					})
+				}
+				else {
+					grades.push({
+						name: component.name,
+						percentage: (component.percentage/100) * subject.percentage,
+						grade: null
+					})
+				}
+			})
+		}
+		else {
+			grades.push({
+				name: subject.name,
+				percentage: subject.percentage,
+				grade: null
+			})
+		}
+	})
+
+	if (prevGrades) {
+		console.log("grade data submitted");
+		prevGrades.map((g) => {
+			const gradeToChange = grades.find((grade) => grade.name === g.name);
+			if(gradeToChange) {
+				gradeToChange.grade = g.grade;
+			}
+			else {
+				alert(`The grade name "${g.name}" does not exist in the course structure.`);
+			}
+		})
+	}
+	return grades;
+}
 
 
 interface GradeContainerProps {
 }
 export default function GradeContainer(): JSX.Element {
-	const [courseGrades, setCourseGrades] = useState<IGrade[]>(myInitialGrades);
-	const [ gradeToPass, setGradeToPass ] = useState<number>();
+	const [courseGrades, setCourseGrades] = useState<IGrade[]>([]);
+	const [ gradeToPass, setGradeToPass ] = useState<number|null>();
+
+	
 
 	useEffect(() => {
-		
-	}, [gradeToPass]);
+		setCourseGrades(createGrades(customCourseStructure)) ;
+	}, []);
+
+	useEffect(() => {
+
+		if(courseGrades.length < 1) return;
+		const passingPercentGrade = customCourseStructure.passingGrade;
+		let noGradePercentageSum:number = 0;
+		let yesGradePercentageSum:number = 0;
+		let yesGradeSum:number = 0;
+
+		courseGrades.map((g) => {
+			if(g.grade === null || g.grade === undefined) {
+				noGradePercentageSum = noGradePercentageSum + g.percentage;
+			} else {
+				yesGradePercentageSum = yesGradePercentageSum + g.percentage;
+				yesGradeSum = yesGradeSum + (g.grade * (g.percentage/100));
+			}
+		})
+		if(noGradePercentageSum + yesGradePercentageSum !== 100) {
+			alert("The sum of the percentages do not equal 100%. Please check the course structure.");
+		}
+
+		if(yesGradePercentageSum === 0) {
+			setGradeToPass(passingPercentGrade);
+			return;
+		} else {
+			const gradeToAcquire = passingPercentGrade - yesGradeSum;
+			if(yesGradeSum + gradeToAcquire !== passingPercentGrade) {
+				alert("The sum of the grades do not equal the passing grade. Please check the course structure.");
+			}
+			const currGradePercentToPass = (gradeToAcquire / noGradePercentageSum) * 100;
+
+			console.log(yesGradePercentageSum);
+			console.log(gradeToAcquire);
+
+			setGradeToPass(currGradePercentToPass);
+		}
+	}, [courseGrades]);
 	
 	return (
 		<div className="mx-10">
@@ -236,6 +323,7 @@ export default function GradeContainer(): JSX.Element {
 							parentPercentage={100} 
 							courseGrades={courseGrades}
 							setCourseGrades={setCourseGrades}
+							gradeToPass={gradeToPass}
 						/>
 					)
 				})

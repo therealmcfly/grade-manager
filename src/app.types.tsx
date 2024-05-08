@@ -61,7 +61,7 @@ class CourseGrades {
 
 interface IGrade {
 	name: string;
-	percentage?: number;
+	percentage: number;
 	grade: number|null|undefined;
 }
 
