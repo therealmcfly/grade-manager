@@ -315,7 +315,7 @@ export default function GradeContainer(): JSX.Element {
 	
 	return (
 		<div className="mx-5 w-full">
-			<div className="flex justify-between items-center">
+			<div className="flex justify-between items-center w-full">
 				<span className="text-2xl underline my-5">
 					{`${customCourseStructure.courseName} Grade Manager`}
 				</span>
@@ -323,6 +323,10 @@ export default function GradeContainer(): JSX.Element {
 					<button className="border-white border-2 px-1 mr-5" type="button" onClick={handleBtnClick}>load course</button>
 					<button className="border-white border-2 px-1 mr-5" type="button" onClick={handleBtnClick}>load grade</button>
 				</div>
+			</div>
+			<div className="flex justify-between items-center">
+				<span>{`Passing Overall Grade : ${customCourseStructure.passingGrade}%`}</span>
+				{gradeToPass && <span className="text-blue-500">{`Need to score : ${gradeToPass?.toFixed(2)}%`}</span>}
 			</div>
 			{
 				customCourseStructure.subjects.map((subject, i) => {

@@ -126,7 +126,7 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 								type="button" onClick={handleSetClick}
 								className="border-white border-2 px-1"
 							>SET</button>
-							<div className="text-blue-300">{`${gradeToPass?.toFixed(2)}% to pass the course`}</div>
+							{/* <div className="text-blue-300">{`${gradeToPass?.toFixed(2)}% to pass the course`}</div> */}
 						</>
 						}
 						
