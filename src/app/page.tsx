@@ -1,12 +1,10 @@
 "use client"
-import GradeManager from "../component/GradeManager";
+import GradeManager from "../components/GradeManager";
 
 
 export default function Home() {
 
   return (
-		<div className="flex w-full h-full">
 			<GradeManager/>
-		</div>
   );
 }

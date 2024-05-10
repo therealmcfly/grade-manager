@@ -2,62 +2,7 @@ import { useEffect, useState } from "react";
 import GradeItem from "./GradeItem";
 import { stringify } from "querystring";
 import GradeHeader from "./GradeHeader";
-
-class CourseGrades {
-	courseName: string;
-	passingGrade: number;
-	grades:IGrade[];
-	constructor(courseStructure: ICourseStructure, grade?:IGrade[]) {
-		this.courseName = courseStructure.courseName;
-		this.passingGrade = courseStructure.passingGrade;
-		grade ? this.grades = grade : this.grades = [];
-		courseStructure.subjects.map((subject) => {
-			if (subject.components) {
-				subject.components.map((component) => {
-					if(component.components) {
-						component.components.map((subComponent) => {
-							this.grades.push({
-								name: subComponent.name,
-								percentage: ((subComponent.percentage/100 * component.percentage)/100) * subject.percentage,
-								grade: null
-							})
-						})
-					}
-					else {
-						this.grades.push({
-							name: component.name,
-							percentage: (component.percentage/100) * subject.percentage,
-							grade: null
-						})
-					}
-				})
-			}
-			else {
-				this.grades.push({
-					name: subject.name,
-					percentage: subject.percentage,
-					grade: null
-				})
-			}
-		})
-
-		// if(grade)	{
-		// 	console.log("grade data submitted");
-		// 	grade.map((g) => {
-		// 		const thisGrade = this.grades.find((thisGrade) => thisGrade.name === g.name);
-		// 		if(thisGrade) {
-		// 			thisGrade.grade = g.grade;
-		// 		}
-		// 		else {
-		// 			this.grades.push(g);
-		// 		}
-		// 	})
-		// }
-	}
-	public updateGrade(name:string, grade:number) {
-		this.grades.find((grade) => grade.name === name)!.grade = grade;
-	}
-}
+import { ICourseStructure, IComponent, IGrade, GradeType } from "../types";
 
 const customCourseStructure:ICourseStructure = {
 	courseName: "EAP 2",
@@ -73,19 +18,24 @@ const customCourseStructure:ICourseStructure = {
 					components: [
 						{
 							name: "Live Writing 1",
-							percentage: 25
+							percentage: 25,
+							gradeType: GradeType.Percent
 						},
 						{
 							name: "Live Writing 2",
-							percentage: 25
+							percentage: 25,
+							gradeType: GradeType.Percent
+
 						},
 						{
 							name: "Live Writing 3",
-							percentage: 25
+							percentage: 25,
+							gradeType: GradeType.Percent
 						},
 						{
 							name: "Live Writing 4",
-							percentage: 25
+							percentage: 25,
+							gradeType: GradeType.Percent
 						}
 					]
 				},
@@ -95,11 +45,13 @@ const customCourseStructure:ICourseStructure = {
 					components: [
 						{
 							name: "Live Writing 5",
-							percentage: 50
+							percentage: 50,
+							gradeType: GradeType.Percent
 						},
 						{
 							name: "Live Writing 6",
-							percentage: 50
+							percentage: 50,
+							gradeType: GradeType.Percent
 						}
 					]
 				}
@@ -111,23 +63,113 @@ const customCourseStructure:ICourseStructure = {
 			components: [
 				{
 					name: "Practice Test 1",
-					percentage: 20
+					percentage: 20,
+					components: [
+						// make 3 components reading, listining, writing
+						{
+							name: "Reading",
+							percentage: 33.5,
+							gradeType: GradeType.Number
+						},
+						{
+							name: "Listening",
+							percentage: 33.5,
+							gradeType: GradeType.Number
+						},
+						{
+							name: "Writing",
+							percentage: 33,
+							gradeType: GradeType.Number
+						}
+					]
 				},
 				{
 					name: "Practice Test 2",
-					percentage: 20
+					percentage: 20,
+					components: [
+						// make 3 components reading, listining, writing
+						{
+							name: "Reading",
+							percentage: 33.5,
+							gradeType: GradeType.Number
+						},
+						{
+							name: "Listening",
+							percentage: 33.5,
+							gradeType: GradeType.Number
+						},
+						{
+							name: "Writing",
+							percentage: 33,
+							gradeType: GradeType.Number
+						}
+					]
 				},
 				{
 					name: "Practice Test 3",
-					percentage: 20
+					percentage: 20,
+					components: [
+						// make 3 components reading, listining, writing
+						{
+							name: "Reading",
+							percentage: 33.5,
+							gradeType: GradeType.Number
+						},
+						{
+							name: "Listening",
+							percentage: 33.5,
+							gradeType: GradeType.Number
+						},
+						{
+							name: "Writing",
+							percentage: 33,
+							gradeType: GradeType.Number
+						}
+					]
 				},
 				{
 					name: "Practice Test 4",
-					percentage: 20
+					percentage: 20,
+					components: [
+						// make 3 components reading, listining, writing
+						{
+							name: "Reading",
+							percentage: 33.5,
+							gradeType: GradeType.Number
+						},
+						{
+							name: "Listening",
+							percentage: 33.5,
+							gradeType: GradeType.Number
+						},
+						{
+							name: "Writing",
+							percentage: 33,
+							gradeType: GradeType.Number
+						}
+					]
 				},
 				{
 					name: "Practice Test 5",
-					percentage: 20
+					percentage: 20,
+					components: [
+						// make 3 components reading, listining, writing
+						{
+							name: "Reading",
+							percentage: 33.5,
+							gradeType: GradeType.Number
+						},
+						{
+							name: "Listening",
+							percentage: 33.5,
+							gradeType: GradeType.Number
+						},
+						{
+							name: "Writing",
+							percentage: 33,
+							gradeType: GradeType.Number
+						}
+					]
 				}
 			]
 		},
@@ -137,23 +179,28 @@ const customCourseStructure:ICourseStructure = {
 			components: [
 				{
 					name: "Individual Presentation 1",
-					percentage: 5
+					percentage: 5,
+					gradeType: GradeType.Percent
 				},
 				{
 					name: "Individual Presentation 2",
-					percentage: 10
+					percentage: 10,
+					gradeType: GradeType.Percent
 				},
 				{
 					name: "Group Presentation 3",
-					percentage: 30
+					percentage: 30,
+					gradeType: GradeType.Percent
 				},
 				{
 					name: "Individual Presentation 4",
-					percentage: 20
+					percentage: 20,
+					gradeType: GradeType.Percent
 				},
 				{
 					name: "Individual Presentation 5",
-					percentage: 35
+					percentage: 35,
+					gradeType: GradeType.Percent
 				}
 			],
 		},
@@ -163,19 +210,23 @@ const customCourseStructure:ICourseStructure = {
 			components: [
 				{
 					name: "Disscussions 1",
-					percentage: 25
+					percentage: 25,
+					gradeType: GradeType.Number
 				},
 				{
 					name: "Disscussions 2",
-					percentage: 25
+					percentage: 25,
+					gradeType: GradeType.Number
 				},
 				{
 					name: "Disscussions 3",
-					percentage: 25
+					percentage: 25,
+					gradeType: GradeType.Number
 				},
 				{
 					name: "Disscussions 4",
-					percentage: 25
+					percentage: 25,
+					gradeType: GradeType.Number
 				}
 			]
 		},
@@ -185,23 +236,28 @@ const customCourseStructure:ICourseStructure = {
 			components: [
 				{
 					name: "Attendance",
-					percentage: 20
+					percentage: 20,
+					gradeType: GradeType.Percent
 				},
 				{
 					name: "Completion",
-					percentage: 20
+					percentage: 20,
+					gradeType: GradeType.Percent
 				},
 				{
 					name: "Overall Participation",
-					percentage: 20
+					percentage: 20,
+					gradeType: GradeType.Percent
 				},
 				{
 					name: "Tutorial",
-					percentage: 20
+					percentage: 20,
+					gradeType: GradeType.Percent
 				},
 				{
 					name: "Presentation Participation",
-					percentage: 20
+					percentage: 20,
+					gradeType: GradeType.Percent
 				}
 			]
 		}
@@ -216,15 +272,28 @@ const myInitialGrades = [
 ]
 
 const createGrades = (structure:ICourseStructure, prevGrades?:{name:string, grade:number}[]):IGrade[] => {
+	const createGradeObject = (grades:IGrade[], name:string, percentage:number, gradeType:GradeType, grade?:number) => {
+		grades.push({
+			name: name,
+			percentage: percentage,
+			gradeType: gradeType,
+			grade: grade? grade : null
+		})
+	}
+	const loopThroughComponents = (components:IComponent[], grades:IGrade[], ) => {
+
+	}
 	const grades:IGrade[] = [];
 	structure.subjects.map((subject) => {
 		if (subject.components) {
+
 			subject.components.map((component) => {
 				if(component.components) {
 					component.components.map((subComponent) => {
 						grades.push({
 							name: subComponent.name,
 							percentage: ((subComponent.percentage/100 * component.percentage)/100) * subject.percentage,
+							gradeType: subComponent.gradeType,
 							grade: null
 						})
 					})
@@ -233,6 +302,7 @@ const createGrades = (structure:ICourseStructure, prevGrades?:{name:string, grad
 					grades.push({
 						name: component.name,
 						percentage: (component.percentage/100) * subject.percentage,
+						gradeType: component.gradeType,
 						grade: null
 					})
 				}
@@ -242,6 +312,7 @@ const createGrades = (structure:ICourseStructure, prevGrades?:{name:string, grad
 			grades.push({
 				name: subject.name,
 				percentage: subject.percentage,
+				gradeType: subject.gradeType,
 				grade: null
 			})
 		}
@@ -267,6 +338,7 @@ interface GradeContainerProps {
 }
 export default function GradeManager(): JSX.Element {
 	const [ courseStructure, setCourseStructure ] = useState<ICourseStructure>(customCourseStructure);
+	const [ basePassingGrade, setBasePassingGrade ] = useState<number>(courseStructure.passingGrade);
 	const [courseGrades, setCourseGrades] = useState<IGrade[]>([]);
 	const [ gradeToPass, setGradeToPass ] = useState<number|null>();
 
@@ -279,7 +351,7 @@ export default function GradeManager(): JSX.Element {
 	useEffect(() => {
 
 		if(courseGrades.length < 1) return;
-		const passingPercentGrade = courseStructure.passingGrade;
+		const passingPercentGrade = basePassingGrade;
 		let noGradePercentageSum:number = 0;
 		let yesGradePercentageSum:number = 0;
 		let yesGradeSum:number = 0;
@@ -292,8 +364,10 @@ export default function GradeManager(): JSX.Element {
 				yesGradeSum = yesGradeSum + (g.grade * (g.percentage/100));
 			}
 		})
-		if(noGradePercentageSum + yesGradePercentageSum !== 100) {
-			alert("The sum of the percentages do not equal 100%. Please check the course structure.");
+		console.log(noGradePercentageSum + yesGradePercentageSum);
+		if(noGradePercentageSum + yesGradePercentageSum < 99.9 && noGradePercentageSum + yesGradePercentageSum > 100.1) {
+			alert("The sum of the percentages do not equal 100%. Please check the course structure. : " + (noGradePercentageSum + yesGradePercentageSum));
+			console.log(noGradePercentageSum + yesGradePercentageSum);
 		}
 
 		if(yesGradePercentageSum === 0) {
@@ -311,12 +385,12 @@ export default function GradeManager(): JSX.Element {
 
 			setGradeToPass(currGradePercentToPass);
 		}
-	}, [courseGrades]);
+	}, [courseGrades, basePassingGrade]);
 	
 	return (
-		<div className="flex flex-col">
-			<GradeHeader courseStructure={courseStructure} gradeToPass={gradeToPass}/>
-			<div className="pt-1/5 h-4/5">
+		<div className="flex flex-col w-100 h-100">
+			<GradeHeader courseStructure={courseStructure} gradeToPass={gradeToPass} basePassingGrade={basePassingGrade} setBasePassingGrade={setBasePassingGrade}/>
+			<div className="pt-36">
 				{
 					courseStructure.subjects.map((subject, i) => {
 						return (

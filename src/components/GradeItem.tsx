@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { GradeType, IComponent, IGrade } from "../types";
 
 interface GradeItemProps {
 	component: IComponent;
@@ -60,7 +61,8 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 					{
 						name : component.name,
 						percentage: component.percentage,
-						grade : Number(inputValue)
+						grade : Number(inputValue),
+						gradeType: component.gradeType
 					}
 				);
 			}
@@ -106,26 +108,27 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 					{grade === null || grade === undefined ?
 					<>
 						{inputEnabled ? 
-						<>
-							<input 
-								className="w-10 text-black" 
-								type="number"
-								onChange={handleInputChange}
-								value={inputValue}
-								>
-							</input>
-							<span>{"% "}</span>
-							<button className="border-white border-2 px-1" type="button" onClick={handleSubmitInput}>OK
-							</button>
-							<button className="border-white border-2 px-1" type="button" onClick={handleSetClick}>X
-							</button>
-						</>
+						(component.gradeType === GradeType.Percent && <><input 
+							className="w-10 text-black" 
+							type="number"
+							onChange={handleInputChange}
+							value={inputValue}
+							>
+						</input>
+						<span>{"% "}</span>
+						<button className="border-white border-2 px-1" type="button" onClick={handleSubmitInput}>Save
+						</button>
+						<button className="border-white border-2 px-1" type="button" onClick={handleSetClick}>Cancel
+						</button></>)
+						
+							
+						
 						:
 						<>
 							<button 
 								type="button" onClick={handleSetClick}
 								className="border-white border-2 px-1"
-							>SET</button>
+							>Set</button>
 							{/* <div className="text-blue-300">{`${gradeToPass?.toFixed(2)}% to pass the course`}</div> */}
 						</>
 						}
@@ -133,7 +136,7 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 					</>
 					:
 						<>
-							<span>{`${grade}% `}</span><button className="border-white border-2 px-1" type="button" onClick={handleRemoveGrade}>X</button>
+							<span>{`${grade}% `}</span><button className="border-white border-2 px-1" type="button" onClick={handleRemoveGrade}>Remove</button>
 						</>
 					}
 					
