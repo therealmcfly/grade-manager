@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import GradeItem from "./GradeItem";
 import { stringify } from "querystring";
+import GradeHeader from "./GradeHeader";
 
 class CourseGrades {
 	courseName: string;
@@ -264,22 +265,21 @@ const createGrades = (structure:ICourseStructure, prevGrades?:{name:string, grad
 
 interface GradeContainerProps {
 }
-export default function GradeContainer(): JSX.Element {
+export default function GradeManager(): JSX.Element {
+	const [ courseStructure, setCourseStructure ] = useState<ICourseStructure>(customCourseStructure);
 	const [courseGrades, setCourseGrades] = useState<IGrade[]>([]);
 	const [ gradeToPass, setGradeToPass ] = useState<number|null>();
 
-	const handleBtnClick = () => {
-		alert("For this feature, tell Eugene that you think he is handsome. ^_________^");
-	}
+	
 
 	useEffect(() => {
-		setCourseGrades(createGrades(customCourseStructure)) ;
+		setCourseGrades(createGrades(courseStructure)) ;
 	}, []);
 
 	useEffect(() => {
 
 		if(courseGrades.length < 1) return;
-		const passingPercentGrade = customCourseStructure.passingGrade;
+		const passingPercentGrade = courseStructure.passingGrade;
 		let noGradePercentageSum:number = 0;
 		let yesGradePercentageSum:number = 0;
 		let yesGradeSum:number = 0;
@@ -314,34 +314,25 @@ export default function GradeContainer(): JSX.Element {
 	}, [courseGrades]);
 	
 	return (
-		<div className="mx-5 w-full">
-			<div className="flex justify-between items-center w-full">
-				<span className="text-2xl underline my-5">
-					{`${customCourseStructure.courseName} Grade Manager`}
-				</span>
-				<div className="flex items-center">
-					<button className="border-white border-2 px-1 mr-5" type="button" onClick={handleBtnClick}>load course</button>
-					<button className="border-white border-2 px-1 mr-5" type="button" onClick={handleBtnClick}>load grade</button>
-				</div>
+		<div className="flex flex-col">
+			<GradeHeader courseStructure={courseStructure} gradeToPass={gradeToPass}/>
+			<div className="pt-1/5 h-4/5">
+				{
+					courseStructure.subjects.map((subject, i) => {
+						return (
+							<GradeItem 
+								key={i} 
+								component={subject} 
+								parentPercentage={100} 
+								courseGrades={courseGrades}
+								setCourseGrades={setCourseGrades}
+								gradeToPass={gradeToPass}
+							/>
+						)
+					})
+				}
 			</div>
-			<div className="flex justify-between items-center">
-				<span>{`Passing Overall Grade : ${customCourseStructure.passingGrade}%`}</span>
-				{gradeToPass && <span className="text-blue-500">{`Need to score : ${gradeToPass?.toFixed(2)}%`}</span>}
-			</div>
-			{
-				customCourseStructure.subjects.map((subject, i) => {
-					return (
-						<GradeItem 
-							key={i} 
-							component={subject} 
-							parentPercentage={100} 
-							courseGrades={courseGrades}
-							setCourseGrades={setCourseGrades}
-							gradeToPass={gradeToPass}
-						/>
-					)
-				})
-			}
+			
 		</div>
 	);
 }
