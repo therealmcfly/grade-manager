@@ -79,7 +79,7 @@ const customCourseStructure:ICourseStructure = {
 						{
 							name: "Writing 1",
 							percentage: 33.34,
-							gradeType: GradeType.Number
+							gradeType: GradeType.Percent
 						}
 					]
 				},
@@ -101,7 +101,7 @@ const customCourseStructure:ICourseStructure = {
 						{
 							name: "Writing 2",
 							percentage: 33.34,
-							gradeType: GradeType.Number
+							gradeType: GradeType.Percent
 						}
 					]
 				},
@@ -123,7 +123,7 @@ const customCourseStructure:ICourseStructure = {
 						{
 							name: "Writing 3",
 							percentage: 33.34,
-							gradeType: GradeType.Number
+							gradeType: GradeType.Percent
 						}
 					]
 				},
@@ -145,7 +145,7 @@ const customCourseStructure:ICourseStructure = {
 						{
 							name: "Writing 4",
 							percentage: 33.34,
-							gradeType: GradeType.Number
+							gradeType: GradeType.Percent
 						}
 					]
 				},
@@ -167,7 +167,7 @@ const customCourseStructure:ICourseStructure = {
 						{
 							name: "Writing 5",
 							percentage: 33.34,
-							gradeType: GradeType.Number
+							gradeType: GradeType.Percent
 						}
 					]
 				}
