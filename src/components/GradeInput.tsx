@@ -46,23 +46,23 @@ export default function GradeInput({ component, setCourseGrades, onClose }:Grade
 				updatedGradeValue = percentageValue;
 				break;
 			case GradeType.Number:
-				if (numberGrade.grade !== undefined || numberGrade.total !== undefined) {
+				if (numberGrade.grade && numberGrade.total) {
 					if (numberGrade.grade > numberGrade.total) {
-							alert("Grade cannot be higher than total");
-							return; // Stop further execution to ensure no incorrect data is saved
+						alert("Grade cannot be higher than total");
+						return; // Stop further execution to ensure no incorrect data is saved
 					} else {
-							updatedGradeValue = ((Number(numberGrade.grade) / Number(numberGrade.total))*100).toFixed(2);
+						updatedGradeValue = ((Number(numberGrade.grade) / Number(numberGrade.total))*100).toFixed(2);
 					}
-			} else {
+				} else {
 					alert("Please enter both grade and total values");
 					return; // Stop further execution because necessary data is missing
-			}
-			break;
+				}
+				break;
 			default:
 				break;
 		}
 
-		if(true) {
+		if(updatedGradeValue) {
 			setCourseGrades((prev) => {
 				const updatedGrades:IGrade[] = [];
 				prev.map((prevGrade) => {
