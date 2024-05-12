@@ -388,7 +388,7 @@ export default function GradeManager(): JSX.Element {
 	}, [courseGrades, basePassingGrade]);
 	
 	return (
-		<div className="flex flex-col w-100 h-100">
+		<div className="flex flex-col w-100 h-100 px-5">
 			<GradeHeader courseStructure={courseStructure} gradeToPass={gradeToPass} basePassingGrade={basePassingGrade} setBasePassingGrade={setBasePassingGrade}/>
 			<div className="pt-48">
 				{

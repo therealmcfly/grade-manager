@@ -50,33 +50,13 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 	}, [courseGrades]);
 
 	return (
-		<div className="mx-10 my-2">
-			
-			<span>
-				{`${component.name} - ${component.percentage}% (${calculatePercentage(component.percentage,parentPercentage)}%)`}
-			</span>
-			{component.components ? 
-				<>
-					{
-						component.components.map((subComponent, i) => {
-							return (
-								<GradeItem 
-									key={i} 
-									component={subComponent} 
-									parentPercentage={calculatePercentage(component.percentage,parentPercentage)}
-									courseGrades={courseGrades}
-									setCourseGrades={setCourseGrades}
-									gradeToPass={gradeToPass}
-									/>
-							)
-						})
-					}
-				</>
-				:
-				<>
-					
-					{grade === null || grade === undefined ?
-					<>
+		<div className="my-2 flex flex-col">
+			<div className="flex justify-between content-center">
+				<span>
+					{`${component.name} - ${component.percentage}% (${calculatePercentage(component.percentage,parentPercentage)}%)`}
+				</span>
+				{!component.components && (grade === null || grade === undefined ?
+					<span>
 						{inputEnabled ? 
 						<GradeInput 
 							component={component} 
@@ -93,16 +73,41 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 						</>
 						}
 						
-					</>
+					</span>
 					:
 						<>
-						<span>{`${" :     "}`}</span>
-							<span className="text-lg text-yellow-500">{`${grade}% `}</span><button className="text-xs py-0.5 border-white border-2 px-1" type="button" onClick={handleRemoveGrade}>Remove</button>
+						<span className="flex justify-between content-center">
+							<span className="text-lg text-yellow-500 mr-2">{`${grade}% `}</span>
+							<button className="text-xs py-0.5 border-white border-2 px-1" type="button" onClick={handleRemoveGrade}>
+								Remove
+							</button>
+						</span>
+
 						</>
+				)}
+			</div>
+			
+			<div className="pl-10">
+			{component.components && 
+				<>
+					{
+						component.components.map((subComponent, i) => {
+							return (
+								<GradeItem 
+									key={i} 
+									component={subComponent} 
+									parentPercentage={calculatePercentage(component.percentage,parentPercentage)}
+									courseGrades={courseGrades}
+									setCourseGrades={setCourseGrades}
+									gradeToPass={gradeToPass}
+									/>
+							)
+						})
 					}
-					
 				</>
 			}
+			</div>
+			
 		</div>
 	);
 }
