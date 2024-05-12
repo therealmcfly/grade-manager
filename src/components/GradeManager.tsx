@@ -67,18 +67,18 @@ const customCourseStructure:ICourseStructure = {
 					components: [
 						// make 3 components reading, listining, writing
 						{
-							name: "Reading",
-							percentage: 33.5,
+							name: "Reading 1",
+							percentage: 33.33,
 							gradeType: GradeType.Number
 						},
 						{
-							name: "Listening",
-							percentage: 33.5,
+							name: "Listening 1",
+							percentage: 33.33,
 							gradeType: GradeType.Number
 						},
 						{
-							name: "Writing",
-							percentage: 33,
+							name: "Writing 1",
+							percentage: 33.34,
 							gradeType: GradeType.Number
 						}
 					]
@@ -89,18 +89,18 @@ const customCourseStructure:ICourseStructure = {
 					components: [
 						// make 3 components reading, listining, writing
 						{
-							name: "Reading",
-							percentage: 33.5,
+							name: "Reading 2",
+							percentage: 33.33,
 							gradeType: GradeType.Number
 						},
 						{
-							name: "Listening",
-							percentage: 33.5,
+							name: "Listening 2",
+							percentage: 33.33,
 							gradeType: GradeType.Number
 						},
 						{
-							name: "Writing",
-							percentage: 33,
+							name: "Writing 2",
+							percentage: 33.34,
 							gradeType: GradeType.Number
 						}
 					]
@@ -111,18 +111,18 @@ const customCourseStructure:ICourseStructure = {
 					components: [
 						// make 3 components reading, listining, writing
 						{
-							name: "Reading",
-							percentage: 33.5,
+							name: "Reading 3",
+							percentage: 33.33,
 							gradeType: GradeType.Number
 						},
 						{
-							name: "Listening",
-							percentage: 33.5,
+							name: "Listening 3",
+							percentage: 33.33,
 							gradeType: GradeType.Number
 						},
 						{
-							name: "Writing",
-							percentage: 33,
+							name: "Writing 3",
+							percentage: 33.34,
 							gradeType: GradeType.Number
 						}
 					]
@@ -133,18 +133,18 @@ const customCourseStructure:ICourseStructure = {
 					components: [
 						// make 3 components reading, listining, writing
 						{
-							name: "Reading",
-							percentage: 33.5,
+							name: "Reading 4",
+							percentage: 33.33,
 							gradeType: GradeType.Number
 						},
 						{
-							name: "Listening",
-							percentage: 33.5,
+							name: "Listening 4",
+							percentage: 33.33,
 							gradeType: GradeType.Number
 						},
 						{
-							name: "Writing",
-							percentage: 33,
+							name: "Writing 4",
+							percentage: 33.34,
 							gradeType: GradeType.Number
 						}
 					]
@@ -155,18 +155,18 @@ const customCourseStructure:ICourseStructure = {
 					components: [
 						// make 3 components reading, listining, writing
 						{
-							name: "Reading",
-							percentage: 33.5,
+							name: "Reading 5",
+							percentage: 33.33,
 							gradeType: GradeType.Number
 						},
 						{
-							name: "Listening",
-							percentage: 33.5,
+							name: "Listening 5",
+							percentage: 33.33,
 							gradeType: GradeType.Number
 						},
 						{
-							name: "Writing",
-							percentage: 33,
+							name: "Writing 5",
+							percentage: 33.34,
 							gradeType: GradeType.Number
 						}
 					]
