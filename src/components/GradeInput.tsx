@@ -1,15 +1,16 @@
 import { GradeType, IComponent, IGrade } from "@/types";
 import { GSP_NO_RETURNED_VALUE } from "next/dist/lib/constants";
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 
 interface GradeInputProps {
 	component: IComponent;
 	setCourseGrades: React.Dispatch<React.SetStateAction<IGrade[]>>;
 	onClose: () => void;
+	inputRef: React.RefObject<HTMLInputElement>;
 }
 
 
-export default function GradeInput({ component, setCourseGrades, onClose }:GradeInputProps): JSX.Element {
+export default function GradeInput({ component, setCourseGrades, onClose, inputRef }:GradeInputProps): JSX.Element {
 	const [ percentageValue, setPercentageValue ] = useState<string>("");
 	const [ numberGrade, setNumberGrade ] = useState<{ grade:string, total:string}>({grade: "", total: ""});
 
@@ -105,6 +106,7 @@ export default function GradeInput({ component, setCourseGrades, onClose }:Grade
 							onChange={handleInputChange}
 							value={percentageValue}
 							name="percentage"
+							ref={inputRef}
 							>
 						</input>
 						<span>{"% "}</span>
@@ -133,6 +135,7 @@ export default function GradeInput({ component, setCourseGrades, onClose }:Grade
 									onChange={handleInputChange}
 									value={numberGrade.grade}
 									name="grade"
+									ref={inputRef}
 									>
 								</input>
 								<span>{" / "}</span>

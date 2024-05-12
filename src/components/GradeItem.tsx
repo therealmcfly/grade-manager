@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GradeType, IComponent, IGrade } from "../types";
 import GradeInput from "./GradeInput";
 
@@ -12,6 +12,7 @@ interface GradeItemProps {
 export default function GradeItem({component, parentPercentage, courseGrades, setCourseGrades, gradeToPass}:GradeItemProps): JSX.Element {
 	const [ grade, setGrade ] = useState<number|null|undefined>(null);
 	const [ inputEnabled, setInputEnabled ] = useState<boolean>(false);
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	
 	const calculatePercentage = (percentage:number, parentPercentage:number = 100) => {
@@ -49,6 +50,12 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 		setGrade(courseGrades.find((g)=> g.name === component.name)?.grade);
 	}, [courseGrades]);
 
+	useEffect(() => {
+		if(inputEnabled) {
+			inputRef.current?.focus();
+		}
+	}, [inputEnabled])
+
 	return (
 		<div className="my-2 flex flex-col">
 			<div className="flex justify-between content-center">
@@ -62,6 +69,7 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 							component={component} 
 							setCourseGrades={setCourseGrades} 
 							onClose={handleSetClick} 
+							inputRef={inputRef}
 						/>
 						:
 						<>
