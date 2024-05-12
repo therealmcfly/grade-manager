@@ -23,17 +23,24 @@ export default function GradeHeader ({courseStructure, gradeToPass, basePassingG
 	return (
 		<nav className="bg-black
 		py-4 text-white fixed  
-		w-full top-0 left-0 px-5 h-38">
+		w-full top-0 left-0 px-5 h-56">
 				<div className="flex w-full justify-center">
 					<a className="underline" href="https://www.linkedin.com/in/eugenehjlee/">{`Created by - therealmcfly`}</a>
 				</div>
 				<div className="flex justify-between items-center">
 					<span className="text-2xl underline my-5">
-						{`${courseStructure.courseName} Grade Manager`}
+						<p>{`${courseStructure.courseName}`}</p>
+						<p>{`Grade Manager`}</p>
 					</span>
 					<span className="flex items-center">
-						<button className="border-white border-2 px-1" type="button" onClick={handleBtnClick}>load course</button>
-						<button className="border-white border-2 px-1" type="button" onClick={handleBtnClick}>load grade</button>
+						<button className="border-white border-2 px-1 mr-2" type="button" onClick={handleBtnClick}>
+							<p>load</p>
+							<p>course</p>
+						</button>
+						<button className="border-white border-2 px-1" type="button" onClick={handleBtnClick}>
+							<p>load</p>
+							<p>grade</p>
+						</button>
 					</span>
 				</div>
 				<div className="flex justify-between items-center">

@@ -390,7 +390,7 @@ export default function GradeManager(): JSX.Element {
 	return (
 		<div className="flex flex-col w-100 h-100 px-5">
 			<GradeHeader courseStructure={courseStructure} gradeToPass={gradeToPass} basePassingGrade={basePassingGrade} setBasePassingGrade={setBasePassingGrade}/>
-			<div className="pt-48">
+			<div className="pt-56">
 				{
 					courseStructure.subjects.map((subject, i) => {
 						return (

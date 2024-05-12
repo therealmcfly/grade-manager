@@ -98,7 +98,7 @@ export default function GradeInput({ component, setCourseGrades, onClose }:Grade
 		switch (gradeType) {
 			case GradeType.Percent:
 				return (
-					<>
+					<div className="flex">
 						<input 
 							className="w-10 text-black" 
 							type="number"
@@ -108,47 +108,53 @@ export default function GradeInput({ component, setCourseGrades, onClose }:Grade
 							>
 						</input>
 						<span>{"% "}</span>
-						<button className="border-white border-2 px-1" type="button" onClick={handleSubmitInput}>Save
+						<button className="border-white border-2 px-1 py-0.5 text-xs mx-1" type="button" onClick={handleSubmitInput}>Save
 						</button>
-						<button className="border-white border-2 px-1" type="button" onClick={onClose}>Cancel
+						<button className="border-white border-2 px-1 py-0.5 text-xs" type="button" onClick={onClose}>Cancel
 						</button>
-					</>
+					</div>
 				);
 				break;
 				case GradeType.Number:
 					return (
-						<>
-							<input 
-								className="w-8 text-black" 
-								type="number"
-								onChange={handleInputChange}
-								value={numberGrade.grade}
-								name="grade"
-								>
-							</input>
-							<a>{" / "}</a>
-							<input 
-								className="w-8 text-black" 
-								type="number"
-								onChange={handleInputChange}
-								value={numberGrade.total}
-								name="total"
-								>
-							</input>
+						<div className="flex items-center flex-wrap justify-end">
 							{
 								numberGrade.grade === "" || numberGrade.total === "" ||
 								(Number(percentageValue) > 0 &&
 								Number(percentageValue) > 100 ?
-								<a className="text-red-500 italic">{` Not Possible `}</a>
+								<a className="text-red-500 italic text-xs text-center mr-1">{` not possible `}</a>
 								:
 								<a className="text-gray-400 italic">{` ${percentageValue}% `}</a>)
 							}
+							<div>
+								<input 
+									className="w-10 text-black" 
+									type="number"
+									onChange={handleInputChange}
+									value={numberGrade.grade}
+									name="grade"
+									>
+								</input>
+								<span>{" / "}</span>
+								<input 
+									className="w-10 text-black" 
+									type="number"
+									onChange={handleInputChange}
+									value={numberGrade.total}
+									name="total"
+									>
+								</input>
+							</div>
 							
-							<button className="border-white border-2 px-1" type="button" onClick={handleSubmitInput}>Save
-							</button>
-							<button className="border-white border-2 px-1" type="button" onClick={onClose}>Cancel
-							</button>
-						</>
+							
+							<div>
+								<button className="border-white border-2 px-1 py-0.5 mx-1 text-xs" type="button" onClick={handleSubmitInput}>Save
+								</button>
+								<button className="border-white border-2 px-1 py-0.5 text-xs" type="button" onClick={onClose}>Cancel
+								</button>
+							</div>
+							
+						</div>
 					);
 					break;
 			default:

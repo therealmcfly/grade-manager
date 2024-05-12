@@ -87,7 +87,7 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 				)}
 			</div>
 			
-			<div className="pl-10">
+			<div className="pl-5">
 			{component.components && 
 				<>
 					{
