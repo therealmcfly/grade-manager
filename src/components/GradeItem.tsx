@@ -52,7 +52,9 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 	return (
 		<div className="mx-10 my-2">
 			
-			<span >{`${component.name} - ${component.percentage}% (${calculatePercentage(component.percentage,parentPercentage)}%)`}</span>
+			<span>
+				{`${component.name} - ${component.percentage}% (${calculatePercentage(component.percentage,parentPercentage)}%)`}
+			</span>
 			{component.components ? 
 				<>
 					{
@@ -72,7 +74,7 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 				</>
 				:
 				<>
-					<span> : </span>
+					
 					{grade === null || grade === undefined ?
 					<>
 						{inputEnabled ? 
@@ -94,7 +96,8 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 					</>
 					:
 						<>
-							<span>{`${grade}% `}</span><button className="border-white border-2 px-1" type="button" onClick={handleRemoveGrade}>Remove</button>
+						<span>{`${" :     "}`}</span>
+							<span className="text-lg text-yellow-500">{`${grade}% `}</span><button className="text-xs py-0.5 border-white border-2 px-1" type="button" onClick={handleRemoveGrade}>Remove</button>
 						</>
 					}
 					
