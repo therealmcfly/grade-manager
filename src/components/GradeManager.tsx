@@ -198,22 +198,27 @@ const customCourseStructure:ICourseStructure = {
 			components: [
 				{
 					name: "Disscussions 1",
-					percentage: 25,
+					percentage: 20,
 					gradeType: GradeType.Number
 				},
 				{
 					name: "Disscussions 2",
-					percentage: 25,
+					percentage: 20,
 					gradeType: GradeType.Number
 				},
 				{
 					name: "Disscussions 3",
-					percentage: 25,
+					percentage: 20,
 					gradeType: GradeType.Number
 				},
 				{
 					name: "Disscussions 4",
-					percentage: 25,
+					percentage: 20,
+					gradeType: GradeType.Number
+				},
+				{
+					name: "Disscussions 6",
+					percentage: 20,
 					gradeType: GradeType.Number
 				}
 			]
