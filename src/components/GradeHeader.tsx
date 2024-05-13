@@ -49,7 +49,7 @@ export default function GradeHeader ({courseStructure, gradeToPass, basePassingG
 					<input className="w-10 text-black" type="number" onChange={handleInputChange} value={basePassingGrade !== 0 ? basePassingGrade.toString() : ""}></input><a>%</a>
 					</span>
 				</div>
-				<div className="flex w-full justify-center">
+				<div className="flex w-full justify-center mt-4">
 				{
 						Number(gradeToPass) > 100 ?
 						<span className="text-xl text-red-500">{`Cannot pass course (need ave ${gradeToPass?.toFixed(2)}%)`}</span>

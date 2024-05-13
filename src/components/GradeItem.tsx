@@ -38,6 +38,8 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 			});
 			return updatedGrades;
 		});
+		// remove from browser local storage
+		localStorage.removeItem(component.name)
 	}
 	
 
@@ -47,7 +49,16 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 
 	useEffect(() => {
 		if(component.components) return;
-		setGrade(courseGrades.find((g)=> g.name === component.name)?.grade);
+		const gradeValue = courseGrades.find((g) => g.name === component.name)?.grade;
+		if(gradeValue) {
+			setGrade(gradeValue);
+			//add to local storage);
+			localStorage.setItem(component.name, gradeValue.toString());
+		}
+		// if(localStorage.getItem(component.name)) {
+		// 	setGrade(Number(localStorage.getItem(component.name)));
+		// }
+		
 	}, [courseGrades]);
 
 	useEffect(() => {

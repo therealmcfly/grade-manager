@@ -264,67 +264,9 @@ const myInitialGrades = [
 	}
 ]
 
-const createGrades = (structure:ICourseStructure, prevGrades?:{name:string, grade:number}[]):IGrade[] => {
-	const createGradeObject = (grades:IGrade[], name:string, percentage:number, gradeType:GradeType, grade?:number) => {
-		grades.push({
-			name: name,
-			percentage: percentage,
-			gradeType: gradeType,
-			grade: grade? grade : null
-		})
-	}
-	const loopThroughComponents = (components:IComponent[], grades:IGrade[], ) => {
 
-	}
-	const grades:IGrade[] = [];
-	structure.subjects.map((subject) => {
-		if (subject.components) {
 
-			subject.components.map((component) => {
-				if(component.components) {
-					component.components.map((subComponent) => {
-						grades.push({
-							name: subComponent.name,
-							percentage: ((subComponent.percentage/100 * component.percentage)/100) * subject.percentage,
-							gradeType: subComponent.gradeType,
-							grade: null
-						})
-					})
-				}
-				else {
-					grades.push({
-						name: component.name,
-						percentage: (component.percentage/100) * subject.percentage,
-						gradeType: component.gradeType,
-						grade: null
-					})
-				}
-			})
-		}
-		else {
-			grades.push({
-				name: subject.name,
-				percentage: subject.percentage,
-				gradeType: subject.gradeType,
-				grade: null
-			})
-		}
-	})
 
-	if (prevGrades) {
-		console.log("grade data submitted");
-		prevGrades.map((g) => {
-			const gradeToChange = grades.find((grade) => grade.name === g.name);
-			if(gradeToChange) {
-				gradeToChange.grade = g.grade;
-			}
-			else {
-				alert(`The grade name "${g.name}" does not exist in the course structure.`);
-			}
-		})
-	}
-	return grades;
-}
 
 
 interface GradeContainerProps {
@@ -335,10 +277,85 @@ export default function GradeManager(): JSX.Element {
 	const [courseGrades, setCourseGrades] = useState<IGrade[]>([]);
 	const [ gradeToPass, setGradeToPass ] = useState<number|null>();
 
+	const createGrades = (structure:ICourseStructure, localStorage:Storage, prevGrades?:{name:string, grade:number}[]):IGrade[] => {
+		const createGradeObject = (grades:IGrade[], name:string, percentage:number, gradeType:GradeType, grade?:number) => {
+			grades.push({
+				name: name,
+				percentage: percentage,
+				gradeType: gradeType,
+				grade: grade? grade : null
+			})
+		}
+		const loopThroughComponents = (components:IComponent[], grades:IGrade[], ) => {
 	
+		}
+		const grades:IGrade[] = [];
+		structure.subjects.map((subject) => {
+			if (subject.components) {
+	
+				subject.components.map((component) => {
+					if(component.components) {
+						component.components.map((subComponent) => {
+							grades.push({
+								name: subComponent.name,
+								percentage: ((subComponent.percentage/100 * component.percentage)/100) * subject.percentage,
+								gradeType: subComponent.gradeType,
+								grade: null
+							})
+						})
+					}
+					else {
+						grades.push({
+							name: component.name,
+							percentage: (component.percentage/100) * subject.percentage,
+							gradeType: component.gradeType,
+							grade: null
+						})
+					}
+				})
+			}
+			else {
+				grades.push({
+					name: subject.name,
+					percentage: subject.percentage,
+					gradeType: subject.gradeType,
+					grade: null
+				})
+			}
+		})
+	
+		if (prevGrades) {
+			console.log("grade data submitted");
+			prevGrades.map((g) => {
+				localStorage.setItem(g.name, g.grade.toString());
+			})
+		}
+	
+		Object.keys(localStorage).forEach((gradeName) => {
+			const gradeToChange = grades.find((g) => g.name === gradeName);
+			if(gradeToChange) {
+				gradeToChange.grade = Number(localStorage.getItem(gradeName));
+			}
+			else {
+				console.log(`"${gradeName}" does not exist in the ${structure.courseName} course structure.`);
+			}
+		});
+	
+		return grades;
+	}
+
+	const gradeDataLocalStorageSaver = (action:string, gradeName:string, grade:string) => {
+		//need to work on this
+		// const currentCourse = courseStructure.courseName;
+		// const prevGrade = {...localStorage.getItem(currentCourse)};
+
+		// if(action === "save") localStorage.setItem(currentCourse, );
+		// if(action === "remove") localStorage.removeItem(gradeName);
+		// if(action === "clear") localStorage.clear();
+	};
 
 	useEffect(() => {
-		setCourseGrades(createGrades(courseStructure)) ;
+		setCourseGrades(createGrades(courseStructure, localStorage)) ;
 	}, []);
 
 	useEffect(() => {

@@ -37,8 +37,6 @@ export default function GradeInput({ component, setCourseGrades, onClose, inputR
 	}
 
 	const handleSubmitInput = () => {
-		
-
 		let updatedGradeValue:string = "";
 
 		switch (component.gradeType) {
