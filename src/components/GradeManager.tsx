@@ -12,49 +12,37 @@ const customCourseStructure:ICourseStructure = {
 			name: "Writing",
 			percentage: 55,
 			components: [
-				{
-					name: "Short Live Writing",
-					percentage: 45,
-					components: [
 						{
 							name: "Live Writing 1",
-							percentage: 25,
+							percentage: 5,
 							gradeType: GradeType.Percent
 						},
 						{
 							name: "Live Writing 2",
-							percentage: 25,
+							percentage: 10,
 							gradeType: GradeType.Percent
 
 						},
 						{
 							name: "Live Writing 3",
-							percentage: 25,
+							percentage: 15,
 							gradeType: GradeType.Percent
 						},
 						{
 							name: "Live Writing 4",
-							percentage: 25,
+							percentage: 15,
 							gradeType: GradeType.Percent
-						}
-					]
-				},
-				{
-					name: "Long Live Writing",
-					percentage: 55,
-					components: [
+						},
 						{
 							name: "Live Writing 5",
-							percentage: 50,
+							percentage: 25,
 							gradeType: GradeType.Percent
 						},
 						{
 							name: "Live Writing 6",
-							percentage: 50,
+							percentage: 30,
 							gradeType: GradeType.Percent
 						}
-					]
-				}
 			]
 		},
 		{
