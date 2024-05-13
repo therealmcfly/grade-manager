@@ -23,7 +23,7 @@ export default function GradeInput({ component, setCourseGrades, onClose, inputR
 				setPercentageValue(e.target.value);
 				break;
 				case GradeType.Number:
-					if(Number(e.target.value) > 99) return;
+					if(Number(e.target.value) > 100) return;
 				setNumberGrade((prev) => {
 					return {
 					...prev,
