@@ -48,7 +48,7 @@ export default function GradeInput({ component, setCourseGrades, onClose, inputR
 				break;
 			case GradeType.Number:
 				if (numberGrade.grade && numberGrade.total) {
-					if (numberGrade.grade > numberGrade.total) {
+					if (Number(numberGrade.grade) > Number(numberGrade.total)) {
 						alert("Grade cannot be higher than total");
 						return; // Stop further execution to ensure no incorrect data is saved
 					} else {
