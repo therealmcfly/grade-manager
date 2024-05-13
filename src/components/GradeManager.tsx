@@ -217,7 +217,7 @@ const customCourseStructure:ICourseStructure = {
 					gradeType: GradeType.Number
 				},
 				{
-					name: "Disscussions 6",
+					name: "Disscussions 5",
 					percentage: 20,
 					gradeType: GradeType.Number
 				}
