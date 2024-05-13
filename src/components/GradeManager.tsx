@@ -35,12 +35,12 @@ const customCourseStructure:ICourseStructure = {
 						},
 						{
 							name: "Live Writing 5",
-							percentage: 25,
+							percentage: 20,
 							gradeType: GradeType.Percent
 						},
 						{
 							name: "Live Writing 6",
-							percentage: 30,
+							percentage: 35,
 							gradeType: GradeType.Percent
 						}
 			]
