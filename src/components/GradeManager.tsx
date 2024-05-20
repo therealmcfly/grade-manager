@@ -399,7 +399,7 @@ export default function GradeManager(): JSX.Element {
 			
 			setAverageGrade(gradesArr.reduce((a, b) => a + b, 0) / gradesArr.length);
 		}
-
+		
 		
 	}, [courseGrades, basePassingGrade]);
 	

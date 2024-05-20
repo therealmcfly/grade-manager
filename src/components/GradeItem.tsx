@@ -47,13 +47,19 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 		setInputEnabled(!inputEnabled);
 	}
 
+	// useEffect(() => {
+	// 	if(!component.components) console.log(`${component.name}`, courseGrades.find((g) => g.name === component.name)?.grade);
+	// },[courseGrades]);
+
 	useEffect(() => {
 		if(component.components) return;
 		const gradeValue = courseGrades.find((g) => g.name === component.name)?.grade;
-		if(gradeValue) {
+		if(gradeValue !== null) {
+
+			console.log("grade value : ",gradeValue);
 			setGrade(gradeValue);
 			//add to local storage);
-			localStorage.setItem(component.name, gradeValue.toString());
+			localStorage.setItem(component.name, (gradeValue ? gradeValue.toString() : "0"));
 		}
 		// if(localStorage.getItem(component.name)) {
 		// 	setGrade(Number(localStorage.getItem(component.name)));

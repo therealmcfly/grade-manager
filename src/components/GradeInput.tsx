@@ -61,7 +61,7 @@ export default function GradeInput({ component, setCourseGrades, onClose, inputR
 				break;
 		}
 
-		if(updatedGradeValue) {
+		if(updatedGradeValue !== null) {
 			setCourseGrades((prev) => {
 				const updatedGrades:IGrade[] = [];
 				prev.map((prevGrade) => {

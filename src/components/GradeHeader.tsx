@@ -50,21 +50,18 @@ export default function GradeHeader ({courseStructure, gradeToPass, basePassingG
 						<input className="w-10 text-black" type="number" onChange={handleInputChange} value={basePassingGrade !== 0 ? basePassingGrade.toString() : ""} />
 						<a>%</a>
 					</span>
-					{averageGrade && <span>
+					{averageGrade !== null && <span>
 						<a>{"Current Ave Grade: "}</a>
 						<a className="text-yellow-500">{`${averageGrade.toFixed(2)}%`}</a>
 					</span>}
 				</div>
 				<div className="flex w-full justify-center mt-4">
 				{
-						Number(gradeToPass) > 100 ?
-						<span className="text-xl text-red-500">{`Cannot pass course (need ave ${gradeToPass?.toFixed(2)}%)`}</span>
-						:
-						<span className="text-xl text-blue-500">{`Need over ${gradeToPass?.toFixed(2)}% to pass`}</span>
-					}
-					{
-						
-					}
+					Number(gradeToPass) > 100 ?
+					<span className="text-xl text-red-500">{`Impossible to reach target(need ave ${gradeToPass?.toFixed(2)}%)`}</span>
+					:
+					(Number(gradeToPass) > 0 ? <span className="text-xl text-blue-500">{`Need at least ${gradeToPass?.toFixed(2)}% to pass`}</span>:<span className="text-xl text-green-400">{`Successful reaching target!`} </span>)
+				}
 				</div>
 			</nav>
 	);
