@@ -3,12 +3,13 @@ import { ICourseStructure } from "../types";
 
 interface GradeHeaderProps {
 	courseStructure:ICourseStructure;
-	gradeToPass:number|null|undefined;
+	gradeToPass:number|null;
 	basePassingGrade:number;
 	setBasePassingGrade:React.Dispatch<React.SetStateAction<number>>;
+	averageGrade:number|null;
 }
 
-export default function GradeHeader ({courseStructure, gradeToPass, basePassingGrade, setBasePassingGrade}:GradeHeaderProps) {
+export default function GradeHeader ({courseStructure, gradeToPass, basePassingGrade, setBasePassingGrade, averageGrade}:GradeHeaderProps) {
 
 	const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
 		let newValue = e.target.value;
@@ -44,10 +45,15 @@ export default function GradeHeader ({courseStructure, gradeToPass, basePassingG
 					</span>
 				</div>
 				<div className="flex justify-between items-center">
-					<span>{"Base Passing Grade : "}
-						
-					<input className="w-10 text-black" type="number" onChange={handleInputChange} value={basePassingGrade !== 0 ? basePassingGrade.toString() : ""}></input><a>%</a>
+					<span>
+						<a>{"Target Grade : "}</a>
+						<input className="w-10 text-black" type="number" onChange={handleInputChange} value={basePassingGrade !== 0 ? basePassingGrade.toString() : ""} />
+						<a>%</a>
 					</span>
+					{averageGrade && <span>
+						<a>{"Current Ave Grade: "}</a>
+						<a className="text-yellow-500">{`${averageGrade.toFixed(2)}%`}</a>
+					</span>}
 				</div>
 				<div className="flex w-full justify-center mt-4">
 				{
@@ -56,7 +62,9 @@ export default function GradeHeader ({courseStructure, gradeToPass, basePassingG
 						:
 						<span className="text-xl text-blue-500">{`Need over ${gradeToPass?.toFixed(2)}% to pass`}</span>
 					}
-					
+					{
+						
+					}
 				</div>
 			</nav>
 	);

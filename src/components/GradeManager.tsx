@@ -264,18 +264,14 @@ const myInitialGrades = [
 	}
 ]
 
-
-
-
-
-
 interface GradeContainerProps {
 }
 export default function GradeManager(): JSX.Element {
 	const [ courseStructure, setCourseStructure ] = useState<ICourseStructure>(customCourseStructure);
 	const [ basePassingGrade, setBasePassingGrade ] = useState<number>(courseStructure.passingGrade);
-	const [courseGrades, setCourseGrades] = useState<IGrade[]>([]);
-	const [ gradeToPass, setGradeToPass ] = useState<number|null>();
+	const [ courseGrades, setCourseGrades ] = useState<IGrade[]>([]);
+	const [ gradeToPass, setGradeToPass ] = useState<number|null>(null);
+	const [ averageGrade, setAverageGrade ] = useState<number|null>(null);
 
 	const createGrades = (structure:ICourseStructure, localStorage:Storage, prevGrades?:{name:string, grade:number}[]):IGrade[] => {
 		const createGradeObject = (grades:IGrade[], name:string, percentage:number, gradeType:GradeType, grade?:number) => {
@@ -355,7 +351,7 @@ export default function GradeManager(): JSX.Element {
 	};
 
 	useEffect(() => {
-		setCourseGrades(createGrades(courseStructure, localStorage)) ;
+		setCourseGrades(createGrades(courseStructure, localStorage));
 	}, []);
 
 	useEffect(() => {
@@ -365,6 +361,7 @@ export default function GradeManager(): JSX.Element {
 		let noGradePercentageSum:number = 0;
 		let yesGradePercentageSum:number = 0;
 		let yesGradeSum:number = 0;
+		let gradesArr:number[] = [];
 
 		courseGrades.map((g) => {
 			if(g.grade === null || g.grade === undefined) {
@@ -372,16 +369,21 @@ export default function GradeManager(): JSX.Element {
 			} else {
 				yesGradePercentageSum = yesGradePercentageSum + g.percentage;
 				yesGradeSum = yesGradeSum + (g.grade * (g.percentage/100));
+
+				gradesArr.push(g.grade);
 			}
 		})
+
+		
 		console.log(noGradePercentageSum + yesGradePercentageSum);
 		if(noGradePercentageSum + yesGradePercentageSum < 99.9 && noGradePercentageSum + yesGradePercentageSum > 100.1) {
 			alert("The sum of the percentages do not equal 100%. Please check the course structure. : " + (noGradePercentageSum + yesGradePercentageSum));
 			console.log(noGradePercentageSum + yesGradePercentageSum);
 		}
 
-		if(yesGradePercentageSum === 0) {
+		if(gradesArr.length < 1) {
 			setGradeToPass(passingPercentGrade);
+			setAverageGrade(null);
 			return;
 		} else {
 			const gradeToAcquire = passingPercentGrade - yesGradeSum;
@@ -394,12 +396,22 @@ export default function GradeManager(): JSX.Element {
 			console.log(gradeToAcquire);
 
 			setGradeToPass(currGradePercentToPass);
+			
+			setAverageGrade(gradesArr.reduce((a, b) => a + b, 0) / gradesArr.length);
 		}
+
+		
 	}, [courseGrades, basePassingGrade]);
 	
 	return (
 		<div className="flex flex-col w-100 h-100 px-5">
-			<GradeHeader courseStructure={courseStructure} gradeToPass={gradeToPass} basePassingGrade={basePassingGrade} setBasePassingGrade={setBasePassingGrade}/>
+			<GradeHeader 
+				courseStructure={courseStructure} 
+				gradeToPass={gradeToPass} 
+				basePassingGrade={basePassingGrade} 
+				setBasePassingGrade={setBasePassingGrade}
+				averageGrade={averageGrade}
+			/>
 			<div className="pt-56">
 				{
 					courseStructure.subjects.map((subject, i) => {
