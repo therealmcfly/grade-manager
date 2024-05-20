@@ -274,17 +274,6 @@ export default function GradeManager(): JSX.Element {
 	const [ averageGrade, setAverageGrade ] = useState<number|null>(null);
 
 	const createGrades = (structure:ICourseStructure, localStorage:Storage, prevGrades?:{name:string, grade:number}[]):IGrade[] => {
-		const createGradeObject = (grades:IGrade[], name:string, percentage:number, gradeType:GradeType, grade?:number) => {
-			grades.push({
-				name: name,
-				percentage: percentage,
-				gradeType: gradeType,
-				grade: grade? grade : null
-			})
-		}
-		const loopThroughComponents = (components:IComponent[], grades:IGrade[], ) => {
-	
-		}
 		const grades:IGrade[] = [];
 		structure.subjects.map((subject) => {
 			if (subject.components) {

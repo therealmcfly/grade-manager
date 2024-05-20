@@ -53,13 +53,22 @@ export default function GradeItem({component, parentPercentage, courseGrades, se
 
 	useEffect(() => {
 		if(component.components) return;
-		const gradeValue = courseGrades.find((g) => g.name === component.name)?.grade;
-		if(gradeValue !== null) {
+		const gradeExists = courseGrades.find((g) => g.name === component.name);
 
-			console.log("grade value : ",gradeValue);
+		let gradeValue:number|null|undefined = undefined;
+
+		if(gradeExists) gradeValue = courseGrades.find((g) => g.name === component.name)?.grade;
+
+		if(gradeValue !== undefined) {
+
 			setGrade(gradeValue);
 			//add to local storage);
-			localStorage.setItem(component.name, (gradeValue ? gradeValue.toString() : "0"));
+			if(gradeValue === 0) {
+				localStorage.setItem(component.name, "0");
+			} else if(gradeValue === undefined || gradeValue === null) {
+				return;
+			} else localStorage.setItem(component.name, gradeValue.toString());
+			
 		}
 		// if(localStorage.getItem(component.name)) {
 		// 	setGrade(Number(localStorage.getItem(component.name)));
