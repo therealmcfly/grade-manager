@@ -176,8 +176,8 @@ export default function GradeInput({ component, setCourseGrades, onClose, inputR
 	}, [numberGrade]);
 
 	return (
-		<>
+		<form onSubmit={handleSubmitInput}>
 			{renderGradeInput(component.gradeType)}
-		</>
+		</form>
 	)
 }
