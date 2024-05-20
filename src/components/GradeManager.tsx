@@ -197,27 +197,27 @@ const customCourseStructure:ICourseStructure = {
 			percentage: 5,
 			components: [
 				{
-					name: "Disscussions 1",
+					name: "Discussions 1",
 					percentage: 20,
 					gradeType: GradeType.Number
 				},
 				{
-					name: "Disscussions 2",
+					name: "Discussions 2",
 					percentage: 20,
 					gradeType: GradeType.Number
 				},
 				{
-					name: "Disscussions 3",
+					name: "Discussions 3",
 					percentage: 20,
 					gradeType: GradeType.Number
 				},
 				{
-					name: "Disscussions 4",
+					name: "Discussions 4",
 					percentage: 20,
 					gradeType: GradeType.Number
 				},
 				{
-					name: "Disscussions 5",
+					name: "Discussions 5",
 					percentage: 20,
 					gradeType: GradeType.Number
 				}
@@ -315,15 +315,40 @@ export default function GradeManager(): JSX.Element {
 				localStorage.setItem(g.name, g.grade.toString());
 			})
 		}
+
+		let s:string[] = [];
 	
 		Object.keys(localStorage).forEach((gradeName) => {
-			const gradeToChange = grades.find((g) => g.name === gradeName);
+			let gradeToChange = grades.find((g) => g.name === gradeName);
+
+			// if gradeName includes "Disscussions" then find the grade with the last character of the string
 			if(gradeToChange) {
 				gradeToChange.grade = Number(localStorage.getItem(gradeName));
 			}
 			else {
 				console.log(`"${gradeName}" does not exist in the ${structure.courseName} course structure.`);
 			}
+			if(gradeName.includes("Disscussions")) {
+				const lastCharOfStr = gradeName.charAt(gradeName.length - 1);
+				if(Object.keys(localStorage).find((g) => g === `Discussions ${lastCharOfStr}`)) {
+					s.push(gradeName);
+				} else {
+					gradeToChange = grades.find((g) => g.name === `Discussions ${lastCharOfStr}`);
+				console.log(gradeToChange);
+				}
+			}
+			
+			if(gradeToChange) {
+				gradeToChange.grade = Number(localStorage.getItem(gradeName));
+			}
+			else {
+				console.log(`"${gradeName}" does not exist in the ${structure.courseName} course structure.`);
+			}
+			
+		});
+
+		s.forEach((gradeName) => {
+			localStorage.removeItem(gradeName);
 		});
 	
 		return grades;
