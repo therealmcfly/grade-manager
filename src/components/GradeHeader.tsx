@@ -4,17 +4,19 @@ import { ICourseStructure } from "../types";
 interface GradeHeaderProps {
 	courseStructure:ICourseStructure;
 	gradeToPass:number|null;
-	basePassingGrade:number;
-	setBasePassingGrade:React.Dispatch<React.SetStateAction<number>>;
+	targetGrade:number;
+	setTargetGrade:React.Dispatch<React.SetStateAction<number>>;
 	averageGrade:number|null;
+	expectedGrade:number|null;
+	overallGrade:number|null;
 }
 
-export default function GradeHeader ({courseStructure, gradeToPass, basePassingGrade, setBasePassingGrade, averageGrade}:GradeHeaderProps) {
+export default function GradeHeader ({courseStructure, gradeToPass, targetGrade, setTargetGrade, averageGrade, expectedGrade, overallGrade}:GradeHeaderProps) {
 
 	const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
 		let newValue = e.target.value;
 		if(Number(newValue) > 100) return;
-		setBasePassingGrade(Number(newValue));
+		setTargetGrade(Number(newValue));
 	}
 
 	const handleBtnClick = () => {
@@ -47,21 +49,41 @@ export default function GradeHeader ({courseStructure, gradeToPass, basePassingG
 				<div className="flex justify-between items-center">
 					<span>
 						<a>{"Target Grade : "}</a>
-						<input className="w-10 text-black" type="number" onChange={handleInputChange} value={basePassingGrade !== 0 ? basePassingGrade.toString() : ""} />
+						<input className="w-10 text-black" type="number" onChange={handleInputChange} value={targetGrade !== 0 ? targetGrade.toString() : ""} />
 						<a>%</a>
 					</span>
-					{averageGrade !== null && <span>
-						<a>{"Current Ave Grade: "}</a>
-						<a className="text-yellow-500">{`${averageGrade.toFixed(2)}%`}</a>
-					</span>}
+					{
+						Number(gradeToPass) > 100 ?
+						<span className="text-xl text-red-500">{`Impossible to reach target(need ave ${gradeToPass?.toFixed(2)}%)`}</span>
+						:
+						(Number(gradeToPass) > 0 ? 
+						<span className="text-xl text-blue-500">
+							{`Need at least ${gradeToPass?.toFixed(2)}% to pass`}
+						</span>:
+						<span className="text-xl text-green-400">
+							{`Successful reaching target!`} 
+						</span>)
+					}
 				</div>
-				<div className="flex w-full justify-center mt-4">
-				{
-					Number(gradeToPass) > 100 ?
-					<span className="text-xl text-red-500">{`Impossible to reach target(need ave ${gradeToPass?.toFixed(2)}%)`}</span>
-					:
-					(Number(gradeToPass) > 0 ? <span className="text-xl text-blue-500">{`Need at least ${gradeToPass?.toFixed(2)}% to pass`}</span>:<span className="text-xl text-green-400">{`Successful reaching target!`} </span>)
-				}
+				<div className="flex w-full justify-between mt-4">
+					{
+						averageGrade !== null && 
+						<span>
+							<a>{"Ave Grade: "}</a>
+							<a className="text-yellow-500">{`${averageGrade.toFixed(2)}%`}</a>
+						</span>
+					}
+					{
+						(averageGrade !== null && overallGrade === null) ? 
+						<span>
+							<a>{"Expected Grade : "}</a>
+							<a className="text-yellow-500">{`${expectedGrade?.toFixed(2)}%`}</a>
+						</span>:
+						<span>
+							<a>{"Overall Grade : "}</a>
+							<a className="text-yellow-500">{`${overallGrade?.toFixed(2)}%`}</a>
+						</span>
+					}
 				</div>
 			</nav>
 	);
