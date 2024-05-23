@@ -366,6 +366,26 @@ export default function GradeManager(): JSX.Element {
 		// if(action === "clear") localStorage.clear();
 	};
 
+	const onExportClick = () => {
+		
+		let grades:{name:string, grade:string}[] = [];
+		courseGrades.map((g) => {
+			if(g.grade !== null && g.grade !== undefined) {
+				if(g.grade?.toString() === "0") grades.push({name: g.name, grade: "0"});
+				else grades.push({name: g.name, grade: g.grade?.toString()});
+			}
+		});
+		const gradesString = JSON.stringify(grades);
+		// user download the txt file with the grades
+		const element = document.createElement("a");
+		const file = new Blob([gradesString], {type: 'text/plain'});
+		element.href = URL.createObjectURL(file);
+		element.download = "grades.txt";
+		document.body.appendChild(element);
+		element.click();
+
+	}
+
 	useEffect(() => {
 		setCourseGrades(createGrades(courseStructure, localStorage));
 	}, []);
@@ -430,9 +450,14 @@ export default function GradeManager(): JSX.Element {
 			});
 
 			setExpectedGrade(yesGradeSum + noGradeSum);
-
+			
 			if(yesGradesArr.length === courseGrades.length) {
 				setOverallGrade(yesGradePercentageSum);
+			}
+			else {
+				if(overallGrade !== null) {
+					setOverallGrade(null);
+				}
 			}
 			
 		}
@@ -443,6 +468,7 @@ export default function GradeManager(): JSX.Element {
 	return (
 		<div className="flex flex-col w-100 h-100 px-5">
 			<GradeHeader 
+				onExportClick={onExportClick}
 				courseStructure={courseStructure} 
 				gradeToPass={gradeToPass} 
 				targetGrade={targetGrade} 

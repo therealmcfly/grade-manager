@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ICourseStructure } from "../types";
 
 interface GradeHeaderProps {
+	onExportClick:()=>void;
 	courseStructure:ICourseStructure;
 	gradeToPass:number|null;
 	targetGrade:number;
@@ -11,7 +12,7 @@ interface GradeHeaderProps {
 	overallGrade:number|null;
 }
 
-export default function GradeHeader ({courseStructure, gradeToPass, targetGrade, setTargetGrade, averageGrade, expectedGrade, overallGrade}:GradeHeaderProps) {
+export default function GradeHeader ({ onExportClick, courseStructure, gradeToPass, targetGrade, setTargetGrade, averageGrade, expectedGrade, overallGrade}:GradeHeaderProps) {
 
 	const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
 		let newValue = e.target.value;
@@ -40,8 +41,8 @@ export default function GradeHeader ({courseStructure, gradeToPass, targetGrade,
 							<p>load</p>
 							<p>course</p>
 						</button>
-						<button className="border-white border-2 px-1" type="button" onClick={handleBtnClick}>
-							<p>load</p>
+						<button className="border-white border-2 px-1" type="button" onClick={onExportClick}>
+							<p>export</p>
 							<p>grade</p>
 						</button>
 					</span>
