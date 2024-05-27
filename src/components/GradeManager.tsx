@@ -3,6 +3,7 @@ import GradeItem from "./GradeItem";
 import { stringify } from "querystring";
 import GradeHeader from "./GradeHeader";
 import { ICourseStructure, IComponent, IGrade, GradeType } from "../types";
+import Overlay from "./Overlay";
 
 const customCourseStructure:ICourseStructure = {
 	courseName: "EAP 2",
@@ -452,7 +453,7 @@ export default function GradeManager(): JSX.Element {
 			setExpectedGrade(yesGradeSum + noGradeSum);
 			
 			if(yesGradesArr.length === courseGrades.length) {
-				setOverallGrade(yesGradePercentageSum);
+				setOverallGrade(yesGradeSum);
 			}
 			else {
 				if(overallGrade !== null) {
@@ -466,34 +467,37 @@ export default function GradeManager(): JSX.Element {
 	}, [courseGrades, targetGrade]);
 	
 	return (
-		<div className="flex flex-col w-100 h-100 px-5">
-			<GradeHeader 
-				onExportClick={onExportClick}
-				courseStructure={courseStructure} 
-				gradeToPass={gradeToPass} 
-				targetGrade={targetGrade} 
-				setTargetGrade={setTargetGrade}
-				averageGrade={averageGrade}
-				expectedGrade={expectedGrade}
-				overallGrade={overallGrade}
-			/>
-			<div className="pt-56">
-				{
-					courseStructure.subjects.map((subject, i) => {
-						return (
-							<GradeItem 
+		<>
+			{/* <Overlay/> */}
+			<div className="flex flex-col w-100 h-100 px-5">
+				<GradeHeader 
+					onExportClick={onExportClick}
+					courseStructure={courseStructure} 
+					gradeToPass={gradeToPass} 
+					targetGrade={targetGrade} 
+					setTargetGrade={setTargetGrade}
+					averageGrade={averageGrade}
+					expectedGrade={expectedGrade}
+					overallGrade={overallGrade}
+					/>
+				<div className="pt-56">
+					{
+						courseStructure.subjects.map((subject, i) => {
+							return (
+								<GradeItem 
 								key={i} 
 								component={subject} 
 								parentPercentage={100} 
 								courseGrades={courseGrades}
 								setCourseGrades={setCourseGrades}
 								gradeToPass={gradeToPass}
-							/>
-						)
-					})
-				}
+								/>
+							)
+						})
+					}
+				</div>
+				
 			</div>
-			
-		</div>
+		</>
 	);
 }
