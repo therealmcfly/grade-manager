@@ -1,6 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+interface OverlayProps {
+	onClose:() => void
 
-export default function Overlay() {
+}
+
+export default function Overlay({ onClose }:OverlayProps) {
 	const [inputValue, setInputValue] = useState<string>('');
 
   const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -26,26 +30,36 @@ export default function Overlay() {
 				});
 			});
 
+			onClose();
 			
 		} 
 		catch (err) {
-			console.log(err)
+			if (err instanceof Error) {
+        console.log(err.message);
+        alert(err.message);
+      } else {
+        console.log('An unknown error occurred');
+        alert('An unknown error occurred');
+      }
 		}
-
+		
   };
 
 
 	return(
 		<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-gray-300 p-8 rounded shadow-lg text-black text-xs">
-			<form onSubmit={handleSubmit}>
+				<form className="flex flex-col" onSubmit={handleSubmit}>
           <textarea
             className="p-1"
             onChange={handleInputChange}
             value={inputValue}
           />
-          <button type="submit" className="mt-2 bg-blue-500 text-white px-4 py-2 rounded">
+          <button type="submit" className="mt-2 bg-blue-500 text-white px-4 py-1 rounded">
             Submit
+          </button>
+					<button className="mt-1 bg-blue-500 text-white px-4 py-1 rounded" onClick={onClose}>
+            Close
           </button>
         </form>
       </div>

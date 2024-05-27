@@ -275,6 +275,7 @@ export default function GradeManager(): JSX.Element {
 	const [ averageGrade, setAverageGrade ] = useState<number|null>(null);
 	const [ expectedGrade, setExpectedGrade ] = useState<number|null>(null);
 	const [ overallGrade, setOverallGrade ] = useState<number|null>(null);
+	const [ showLoadGrade, setShowLoadGrade ] = useState<boolean>(false);
 
 	const createGrades = (structure:ICourseStructure, localStorage:Storage, prevGrades?:{name:string, grade:number}[]):IGrade[] => {
 		const grades:IGrade[] = [];
@@ -387,6 +388,10 @@ export default function GradeManager(): JSX.Element {
 
 	}
 
+	const closeOverlay = () =>{
+		setShowLoadGrade(false);
+	}
+
 	useEffect(() => {
 		setCourseGrades(createGrades(courseStructure, localStorage));
 	}, []);
@@ -468,7 +473,7 @@ export default function GradeManager(): JSX.Element {
 	
 	return (
 		<>
-			{/* <Overlay/> */}
+			{showLoadGrade && <Overlay onClose={closeOverlay}/>}
 			<div className="flex flex-col w-100 h-100 px-5">
 				<GradeHeader 
 					onExportClick={onExportClick}
@@ -479,8 +484,9 @@ export default function GradeManager(): JSX.Element {
 					averageGrade={averageGrade}
 					expectedGrade={expectedGrade}
 					overallGrade={overallGrade}
+					setShowLoadGrade={setShowLoadGrade}
 					/>
-				<div className="pt-56">
+				<div className="pt-48">
 					{
 						courseStructure.subjects.map((subject, i) => {
 							return (

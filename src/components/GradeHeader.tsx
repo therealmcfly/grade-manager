@@ -10,9 +10,10 @@ interface GradeHeaderProps {
 	averageGrade:number|null;
 	expectedGrade:number|null;
 	overallGrade:number|null;
+	setShowLoadGrade:React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function GradeHeader ({ onExportClick, courseStructure, gradeToPass, targetGrade, setTargetGrade, averageGrade, expectedGrade, overallGrade}:GradeHeaderProps) {
+export default function GradeHeader ({ onExportClick, courseStructure, gradeToPass, targetGrade, setTargetGrade, averageGrade, expectedGrade, overallGrade, setShowLoadGrade}:GradeHeaderProps) {
 
 	const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
 		let newValue = e.target.value;
@@ -21,13 +22,13 @@ export default function GradeHeader ({ onExportClick, courseStructure, gradeToPa
 	}
 
 	const handleBtnClick = () => {
-		alert("For this feature, tell Eugene that you think he is handsome. ^_________^");
+		setShowLoadGrade(true);
 	}
 
 	return (
 		<nav className="bg-black
 		py-4 text-white fixed  
-		w-full top-0 left-0 px-5 h-56">
+		w-full top-0 left-0 px-5 h-48">
 				<div className="flex w-full justify-between underline">
 						<a>{`Grade Manager`}</a>
 					<a className="underline" href="https://www.linkedin.com/in/eugenehjlee/">{`Created by - therealmcfly`}</a>
@@ -36,10 +37,10 @@ export default function GradeHeader ({ onExportClick, courseStructure, gradeToPa
 					<span className="text-2xl underline my-5">
 						<p>{`${courseStructure.courseName}`}</p>
 					</span>
-					<span className="flex items-center">
+					<span className="flex items-center text-xs">
 						<button className="border-white border-2 px-1 mr-2" type="button" onClick={handleBtnClick}>
 							<p>load</p>
-							<p>course</p>
+							<p>grade</p>
 						</button>
 						<button className="border-white border-2 px-1" type="button" onClick={onExportClick}>
 							<p>export</p>
