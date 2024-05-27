@@ -486,7 +486,7 @@ export default function GradeManager(): JSX.Element {
 					overallGrade={overallGrade}
 					setShowLoadGrade={setShowLoadGrade}
 					/>
-				<div className="pt-48">
+				<div className="pt-40">
 					{
 						courseStructure.subjects.map((subject, i) => {
 							return (

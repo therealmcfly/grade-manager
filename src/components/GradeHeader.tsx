@@ -28,13 +28,13 @@ export default function GradeHeader ({ onExportClick, courseStructure, gradeToPa
 	return (
 		<nav className="bg-black
 		py-4 text-white fixed  
-		w-full top-0 left-0 px-5 h-48">
+		w-full top-0 left-0 px-5 h-40">
 				<div className="flex w-full justify-between underline">
 						<a>{`Grade Manager`}</a>
 					<a className="underline" href="https://www.linkedin.com/in/eugenehjlee/">{`Created by - therealmcfly`}</a>
 				</div>
 				<div className="flex justify-between items-center">
-					<span className="text-2xl underline my-5">
+					<span className="text-2xl underline my-2">
 						<p>{`${courseStructure.courseName}`}</p>
 					</span>
 					<span className="flex items-center text-xs">
@@ -67,7 +67,7 @@ export default function GradeHeader ({ onExportClick, courseStructure, gradeToPa
 						</span>)
 					}
 				</div>
-				<div className="flex w-full justify-between mt-4">
+				<div className="flex w-full justify-between mt-1">
 					{
 						averageGrade !== null && 
 						<span>
